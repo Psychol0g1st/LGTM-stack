@@ -1,0 +1,58 @@
+services:
+    # Loki for logs
+    loki:
+        image: grafana/loki:latest
+        ports:
+            - '9101:3100'
+        volumes:
+            - ./loki-config.yaml:/etc/loki/local-config.yaml
+        command: -config.file=/etc/loki/local-config.yaml
+        networks:
+            - lgtm
+            - shared-network
+
+    # Prometheus for metrics (optional, or use Mimir directly)
+    prometheus:
+        image: prom/prometheus:latest
+        ports:
+            - '9102:9090'
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml
+        command: --config.file=/etc/prometheus/prometheus.yml
+        networks:
+            - lgtm
+
+    # Tempo for traces
+    tempo:
+        image: grafana/tempo:latest
+        ports:
+            - '9103:3200'
+        volumes:
+            - ./tempo-config.yaml:/etc/tempo.yaml
+        command: -config.file=/etc/tempo.yaml
+        networks:
+            - lgtm
+
+    # Grafana for visualization
+    grafana:
+        image: grafana/grafana:latest
+        ports:
+            - '9110:3000'
+        volumes:
+            - grafana-storage:/var/lib/grafana
+        environment:
+            - GF_SECURITY_ADMIN_PASSWORD=admin
+        depends_on:
+            - loki
+            - prometheus
+            - tempo
+        networks:
+            - lgtm
+
+volumes:
+    grafana-storage:
+
+networks:
+    lgtm:
+    shared-network:
+        driver: bridge
