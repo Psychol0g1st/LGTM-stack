@@ -62,8 +62,11 @@ services:
 
 volumes:
     grafana-storage:
+        external: true
     loki-data: # Define volume for Loki data
+        external: true
     prometheus-data: # Define volume for Prometheus data
+        external: true
 
 networks:
     lgtm:
