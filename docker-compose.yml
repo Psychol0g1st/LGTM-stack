@@ -7,7 +7,6 @@ services:
             - '9101:3100'
         volumes:
             - ./loki-config.yaml:/etc/loki/local-config.yaml
-            - loki-data:/loki # Persistent volume for Loki data
         command: -config.file=/etc/loki/local-config.yaml
         networks:
             - lgtm
@@ -21,7 +20,6 @@ services:
             - '9102:9090'
         volumes:
             - ./prometheus.yml:/etc/prometheus/prometheus.yml
-            - prometheus-data:/prometheus # Persistent volume for Prometheus data
         command: --config.file=/etc/prometheus/prometheus.yml
         environment:
             - PROMETHEUS_TARGET=${PROMETHEUS_TARGET}
@@ -62,11 +60,6 @@ services:
 
 volumes:
     grafana-storage:
-        external: true
-    loki-data: # Define volume for Loki data
-        external: true
-    prometheus-data: # Define volume for Prometheus data
-        external: true
 
 networks:
     lgtm:
