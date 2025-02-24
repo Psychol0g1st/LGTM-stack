@@ -25,6 +25,7 @@ services:
         command: --config.file=/etc/prometheus/prometheus.yml
         environment:
             - PROMETHEUS_TARGET=${PROMETHEUS_TARGET}
+            - PROMETHEUS_JOB_NAME=${PROMETHEUS_JOB_NAME}
         networks:
             - lgtm
 
