@@ -4,4 +4,4 @@ global:
 scrape_configs:
     - job_name: 'bunteto-backend'
       static_configs:
-          - targets: ['bunteto-backend-local:5001'] # Replace with your Node.js app's address
+          - targets: ['${PROMETHEUS_TARGET}']
