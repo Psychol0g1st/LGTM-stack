@@ -6,8 +6,8 @@ services:
         ports:
             - '9101:3100'
         volumes:
-            - ./loki-config.yaml:/etc/loki/local-config.yaml
-        command: -config.file=/etc/loki/local-config.yaml
+            - ./loki-config.yaml:loki/local-config.yaml
+        command: -config.file=loki/local-config.yaml
         networks:
             - lgtm
             - shared-network
@@ -19,8 +19,8 @@ services:
         ports:
             - '9102:9090'
         volumes:
-            - ./prometheus.yml:/etc/prometheus/prometheus.yml
-        command: --config.file=/etc/prometheus/prometheus.yml
+            - ./prometheus.yml:prometheus/prometheus.yml
+        command: --config.file=prometheus/prometheus.yml
         environment:
             - PROMETHEUS_TARGET=${PROMETHEUS_TARGET}
             - PROMETHEUS_JOB_NAME=${PROMETHEUS_JOB_NAME}
@@ -36,8 +36,8 @@ services:
             - '4317:4317'
             - '4318:4318'
         volumes:
-            - ./tempo-config.yaml:/etc/tempo.yaml
-        command: -config.file=/etc/tempo.yaml
+            - ./tempo-config.yaml:tempo.yaml
+        command: -config.file=tempo.yaml
         networks:
             - lgtm
 
