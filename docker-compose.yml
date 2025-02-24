@@ -39,7 +39,6 @@ services:
             - '4318:4318'
         volumes:
             - ./tempo-config.yaml:/etc/tempo.yaml
-            - tempo-data:/tempo # Persistent volume for Tempo data
         command: -config.file=/etc/tempo.yaml
         networks:
             - lgtm
@@ -65,7 +64,6 @@ volumes:
     grafana-storage:
     loki-data: # Define volume for Loki data
     prometheus-data: # Define volume for Prometheus data
-    tempo-data: # Define volume for Tempo data
 
 networks:
     lgtm:
